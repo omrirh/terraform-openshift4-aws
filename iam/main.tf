@@ -5,13 +5,13 @@ locals {
 data "aws_partition" "current" {}
 
 resource "aws_iam_instance_profile" "worker" {
-  name = "${var.cluster_id}-worker-profile"
+  name = "disconnected-ipi-worker-profile"
 
   role = aws_iam_role.worker_role.name
 }
 
 resource "aws_iam_role" "worker_role" {
-  name = "${var.cluster_id}-worker-role"
+  name = "disconnected-ipi-worker-role"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -32,14 +32,14 @@ EOF
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-worker-role"
+      "Name" = "disconnected-ipi-worker-role"
     },
     var.tags,
   )
 }
 
 resource "aws_iam_role_policy" "worker_policy" {
-  name = "${var.cluster_id}-worker-policy"
+  name = "disconnected-ipi-worker-policy"
   role = aws_iam_role.worker_role.id
 
   policy = <<EOF

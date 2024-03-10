@@ -12,7 +12,7 @@ resource "aws_vpc" "new_vpc" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-vpc"
+      "Name" = "disconnected-ipi-vpc"
     },
     var.tags,
   )

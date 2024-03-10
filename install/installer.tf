@@ -1,21 +1,13 @@
 resource "null_resource" "openshift_installer" {
   provisioner "local-exec" {
     command = <<EOF
-case $(uname -s) in
-  Linux)
-    wget -r -l1 -np -nd ${var.openshift_installer_url} -q -P ${path.root}/installer-files/ -A 'openshift-install-linux-4*.tar.gz'
-    ;;
-  Darwin)
-    wget -r -l1 -np -nd ${var.openshift_installer_url} -q -P ${path.root}/installer-files/ -A 'openshift-install-mac-4*.tar.gz'
-    ;;
-  *) exit 1
-    ;;
-esac
-EOF
+    wget -r -l1 -np -nd https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.0/ -P ./installer-files/ -A 'openshift-install-linux-4.12.0.tar.gz'
+    wget -r -l1 -np -nd https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.0/ -P ./installer-files/ -A 'openshift-install-linux.tar.gz'
+    EOF
   }
 
   provisioner "local-exec" {
-    command = "tar zxvf ${path.root}/installer-files//openshift-install-*-4*.tar.gz -C ${path.root}/installer-files/"
+    command = "find ./installer-files/ -name 'openshift-client-linux-4*.tar.gz' | xargs -I{} tar zxvf {} -C ./installer-files/"
   }
 
   provisioner "local-exec" {
@@ -26,22 +18,15 @@ EOF
 resource "null_resource" "openshift_client" {
   provisioner "local-exec" {
     command = <<EOF
-case $(uname -s) in
-  Linux)
-    wget -r -l1 -np -nd ${var.openshift_installer_url} -q -P ${path.root}/installer-files/ -A 'openshift-client-linux-4*.tar.gz'
-    ;;
-  Darwin)
-    wget -r -l1 -np -nd ${var.openshift_installer_url} -q -P ${path.root}/installer-files/ -A 'openshift-client-mac-4*.tar.gz'
-    ;;
-  *)
-    exit 1
-    ;;
-esac
-EOF
+    wget -r -l1 -np -nd https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.0/ -P ./installer-files/ -A 'openshift-client-linux-4.12.0.tar.gz'
+    wget -r -l1 -np -nd https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.0/ -P ./installer-files/ -A 'openshift-client-linux-arm64-4.12.0.tar.gz'
+    wget -r -l1 -np -nd https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.0/ -P ./installer-files/ -A 'openshift-client-linux-arm64.tar.gz'
+    wget -r -l1 -np -nd https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.0/ -P ./installer-files/ -A 'openshift-client-linux.tar.gz'
+    EOF
   }
 
   provisioner "local-exec" {
-    command = "tar zxvf ${path.root}/installer-files//openshift-client-*-4*.tar.gz -C ${path.root}/installer-files/"
+    command = "find ./installer-files/ -name 'openshift-client-linux-4*.tar.gz' | xargs -I{} tar zxvf {} -C ./installer-files/"
   }
 
   provisioner "local-exec" {

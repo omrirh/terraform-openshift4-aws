@@ -11,13 +11,13 @@ data "aws_partition" "current" {}
 data "aws_ebs_default_kms_key" "current" {}
 
 resource "aws_iam_instance_profile" "master" {
-  name = "${var.cluster_id}-master-profile"
+  name = "disconnected-ipi-master-profile"
 
   role = aws_iam_role.master_role.name
 }
 
 resource "aws_iam_role" "master_role" {
-  name = "${var.cluster_id}-master-role"
+  name = "disconnected-ipi-master-role"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -38,14 +38,14 @@ EOF
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-master-role"
+      "Name" = "disconnected-ipi-master-role"
     },
     var.tags,
   )
 }
 
 resource "aws_iam_role_policy" "master_policy" {
-  name = "${var.cluster_id}-master-policy"
+  name = "disconnected-ipi-master-policy"
   role = aws_iam_role.master_role.id
 
   policy = <<EOF
@@ -110,7 +110,7 @@ resource "aws_network_interface" "master" {
   
   tags = merge(
     {
-    "Name" = "${var.cluster_id}-master-${count.index}"
+    "Name" = "disconnected-ipi-master-${count.index}"
     },
     var.tags,
   )
@@ -138,7 +138,7 @@ resource "aws_instance" "master" {
 
   tags = merge(
     {
-    "Name" = "${var.cluster_id}-master-${count.index}"
+    "Name" = "disconnected-ipi-master-${count.index}"
     },
     var.tags,
   )
@@ -153,7 +153,7 @@ resource "aws_instance" "master" {
 
   volume_tags = merge(
     {
-    "Name" = "${var.cluster_id}-master-${count.index}-vol"
+    "Name" = "disconnected-ipi-master-${count.index}-vol"
     },
     var.tags,
   )

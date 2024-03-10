@@ -5,7 +5,7 @@ resource "aws_internet_gateway" "igw" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-igw"
+      "Name" = "disconnected-ipi-igw"
     },
     var.tags,
   )
@@ -18,7 +18,7 @@ resource "aws_route_table" "default" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-public"
+      "Name" = "disconnected-ipi-public"
     },
     var.tags,
   )
@@ -52,7 +52,7 @@ resource "aws_subnet" "public_subnet" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-public-${var.availability_zones[count.index]}"
+      "Name" = "disconnected-ipi-public-${var.availability_zones[count.index]}"
     },
     var.tags,
   )
@@ -71,7 +71,7 @@ resource "aws_eip" "nat_eip" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-eip-${var.availability_zones[count.index]}"
+      "Name" = "disconnected-ipi-eip-${var.availability_zones[count.index]}"
     },
     var.tags,
   )
@@ -90,7 +90,7 @@ resource "aws_nat_gateway" "nat_gw" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-nat-${var.availability_zones[count.index]}"
+      "Name" = "disconnected-ipi-nat-${var.availability_zones[count.index]}"
     },
     var.tags,
   )

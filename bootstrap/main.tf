@@ -21,7 +21,7 @@ resource "aws_s3_bucket" "ignition" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-bootstrap"
+      "Name" = "disconnected-ipi-bootstrap"
     },
     var.tags,
   )
@@ -41,7 +41,7 @@ resource "aws_s3_bucket_object" "ignition" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-bootstrap"
+      "Name" = "disconnected-ipi-bootstrap"
     },
     var.tags,
   )
@@ -58,13 +58,13 @@ data "ignition_config" "redirect" {
 }
 
 resource "aws_iam_instance_profile" "bootstrap" {
-  name = "${var.cluster_id}-bootstrap-profile"
+  name = "disconnected-ipi-bootstrap-profile"
 
   role = aws_iam_role.bootstrap.name
 }
 
 resource "aws_iam_role" "bootstrap" {
-  name = "${var.cluster_id}-bootstrap-role"
+  name = "disconnected-ipi-bootstrap-role"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -85,14 +85,14 @@ EOF
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-bootstrap-role"
+      "Name" = "disconnected-ipi-bootstrap-role"
     },
     var.tags,
   )
 }
 
 resource "aws_iam_role_policy" "bootstrap" {
-  name = "${var.cluster_id}-bootstrap-policy"
+  name = "disconnected-ipi-bootstrap-policy"
   role = aws_iam_role.bootstrap.id
 
   policy = <<EOF
@@ -145,7 +145,7 @@ resource "aws_instance" "bootstrap" {
 
   tags = merge(
     {
-    "Name" = "${var.cluster_id}-bootstrap"
+    "Name" = "disconnected-ipi-bootstrap"
     },
     var.tags,
   )
@@ -160,7 +160,7 @@ resource "aws_instance" "bootstrap" {
 
   volume_tags = merge(
     {
-    "Name" = "${var.cluster_id}-bootstrap-vol"
+    "Name" = "disconnected-ipi-bootstrap-vol"
     },
     var.tags,
   )
@@ -184,7 +184,7 @@ resource "aws_security_group" "bootstrap" {
 
   tags = merge(
     {
-    "Name" = "${var.cluster_id}-bootstrap-sg"
+    "Name" = "disconnected-ipi-bootstrap-sg"
     },
     var.tags,
   )

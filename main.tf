@@ -98,7 +98,7 @@ module "dns" {
 module "vpc" {
   source = "./vpc"
 
-  cidr_blocks      = [ var.machine_cidr ]
+  cidr_blocks      = [ "192.168.0.0/16" ]
   cluster_id       = module.installer.infraID
   region           = var.aws_region
   vpc              = var.aws_vpc

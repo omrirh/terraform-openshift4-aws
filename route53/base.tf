@@ -25,7 +25,7 @@ resource "aws_route53_zone" "int" {
 
   tags = merge(
     {
-      "Name" = "${var.cluster_id}-int"
+      "Name" = "disconnected-ipi-int"
     },
     var.tags,
   )
